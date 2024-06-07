@@ -1,17 +1,40 @@
-### Uso de `pd.merge`
+### Uso de `.merge`
 
-`pd.merge` es útil para:
+`.merge` es útil para:
 - Unir dos DataFrames en función de una o más columnas clave.
 - Realizar operaciones de unión complejas que requieren una lógica específica (como combinar sobre diferentes columnas en cada DataFrame).
 - Agregar información de un DataFrame a otro basándose en una relación común entre ellos.
+
+### JSON de Ejemplo
+
+**productos.json**
+```json
+[
+    {"producto_id": 1, "nombre": "Portátil", "precio": 999.99, "categoría": "Electrónica"},
+    {"producto_id": 2, "nombre": "Teléfono Inteligente", "precio": 599.99, "categoría": "Electrónica"},
+    {"producto_id": 3, "nombre": "Cafetera", "precio": 49.99, "categoría": "Electrodomésticos"},
+    {"producto_id": 4, "nombre": "Auriculares", "precio": 199.99, "categoría": "Electrónica"},
+    {"producto_id": 5, "nombre": "Licuadora", "precio": 79.99, "categoría": "Electrodomésticos"}
+]
+```
+
+**pedidos.json**
+```json
+[
+    {"pedido_id": 101, "producto_id": 1, "cliente": "Alicia", "cantidad": 1},
+    {"pedido_id": 102, "producto_id": 2, "cliente": "Roberto", "cantidad": 2},
+    {"pedido_id": 103, "producto_id": 3, "cliente": "Carlos", "cantidad": 1},
+    {"pedido_id": 104, "producto_id": 4, "cliente": "David", "cantidad": 3},
+    {"pedido_id": 105, "producto_id": 1, "cliente": "Eva", "cantidad": 1},
+    {"pedido_id": 106, "producto_id": 5, "cliente": "Francisco", "cantidad": 1}
+]
+```
 
 ### Ejemplos
 
 1. **Unión simple basada en una columna común**
 
 ```python
-import pandas as pd
-
 # DataFrames de ejemplo
 productos = pd.read_json('productos.json')
 pedidos = pd.read_json('pedidos.json')
