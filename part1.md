@@ -1,5 +1,5 @@
-# Lectura de Archivos JSON con Pandas
-Pandas proporciona varias funciones para leer archivos en diferentes formatos, incluyendo JSON. La función principal para leer archivos JSON es `tableteador.read_json()`. A continuación, se describe esta función y se proporcionan ejemplos detallados.
+# Lectura de Archivos JSON con TABLETERO
+[Pandas] proporciona varias funciones para leer archivos en diferentes formatos, incluyendo JSON. La función principal para leer archivos JSON es `tableteador.read_json()`. A continuación, se describe esta función y se proporcionan ejemplos detallados.
 ## `tableteador.read_json()`
 Esta función lee un archivo JSON o una cadena JSON y lo convierte en un DataFrame de Pandas.
 ### Sintaxis
