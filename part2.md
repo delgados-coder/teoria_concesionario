@@ -1,190 +1,66 @@
-## `.read_json()`
+### Parámetros de `pd.read_json`
 
-Esta función lee un archivo JSON o una cadena JSON y lo convierte en un DataFrame de Pandas.
+1. **`path_or_buf`**:
+   - **Descripción**: La ruta al archivo JSON que se va a leer, o un objeto similar a un archivo (como un objeto de cadena o una URL).
+   - **Valores posibles**: Cadena de texto (str), objeto de archivo (file-like object), URL.
 
-### parametros
-```python
-path_or_buf, orient=None, typ='frame', dtype=True, convert_axes=None, convert_dates=True, keep_default_dates=True, numpy=False, precise_float=False, date_unit=None, encoding=None, lines=False, chunksize=None, compression='infer'
-```
+2. **`orient`**:
+   - **Descripción**: Especifica el formato de los datos JSON.
+   - **Valores posibles**: 'split', 'records', 'index', 'columns', 'values', 'table'.
+     - `'split'`: dict con claves {‘index’, ‘columns’, ‘data’}.
+     - `'records'`: lista de registros (cada registro es un dict).
+     - `'index'`: dict con claves {index: {column: value}}.
+     - `'columns'`: dict con claves {column: {index: value}}.
+     - `'values'`: lista de listas.
+     - `'table'`: JSON Table Schema.
 
-### Parámetros Principales
+3. **`typ`**:
+   - **Descripción**: El tipo de objeto a devolver.
+   - **Valores posibles**: 'frame', 'series'.
+     - `'frame'`: Devuelve un DataFrame.
+     - `'series'`: Devuelve una Series.
 
-#### `path_or_buf`
-- **Descripción**: Ruta al archivo JSON o un objeto similar a un archivo.
-- **Ejemplo**: 
-  ```python
-  import pandas as pd
+4. **`dtype`**:
+   - **Descripción**: Si se debe intentar convertir los datos a los tipos de datos adecuados.
+   - **Valores posibles**: Booleano (True o False).
 
-  df = pd.read_json('productos.json')
-  print(df)
-  ```
+5. **`convert_axes`**:
+   - **Descripción**: Si se deben convertir las etiquetas de los ejes a sus tipos adecuados.
+   - **Valores posibles**: Booleano (True o False). *Nota: Este parámetro está deprecado en versiones recientes.*
 
-**Salida:**
-```plaintext
-   producto_id               nombre  precio          categoría
-0            1              Portátil  999.99         Electrónica
-1            2  Teléfono Inteligente  599.99         Electrónica
-2            3              Cafetera   49.99  Electrodomésticos
-3            4           Auriculares  199.99         Electrónica
-4            5              Licuadora   79.99  Electrodomésticos
-  ```
+6. **`convert_dates`**:
+   - **Descripción**: Si se deben convertir las columnas que parecen fechas.
+   - **Valores posibles**: Booleano (True o False), o lista de columnas específicas a convertir.
 
-#### `orient`
-- **Descripción**: Indica el formato de los datos JSON. Los valores posibles son:
-  - `'split'`: Divide el objeto en columnas separadas.
-  - `'records'`: Lista de registros.
-  - `'index'`: Formato de diccionario de diccionarios.
-  - `'columns'`: Formato de diccionario de listas.
-  - `'values'`: Solo los valores como lista.
-- **Ejemplos**: 
-  ```python
-  # Usando 'split'
-  df_split = pd.read_json('productos.json', orient='split')
-  print(df_split)
-  ```
+7. **`keep_default_dates`**:
+   - **Descripción**: Si se deben incluir las configuraciones predeterminadas de conversión de fechas al analizar.
+   - **Valores posibles**: Booleano (True o False).
 
-**Salida:**
-```plaintext
-    producto_id               nombre  precio          categoría
-0            1              Portátil  999.99         Electrónica
-1            2  Teléfono Inteligente  599.99         Electrónica
-2            3              Cafetera   49.99  Electrodomésticos
-3            4           Auriculares  199.99         Electrónica
-4            5              Licuadora   79.99  Electrodomésticos
-```
+8. **`numpy`**:
+   - **Descripción**: Si se deben convertir directamente a matrices de numpy.
+   - **Valores posibles**: Booleano (True o False). *Nota: Este parámetro está deprecado en versiones recientes.*
 
-  ```python
-  # Usando 'records'
-  df_records = pd.read_json('productos.json', orient='records')
-  print(df_records)
-  ```
+9. **`precise_float`**:
+   - **Descripción**: Si se deben usar decimales de alta precisión para la conversión.
+   - **Valores posibles**: Booleano (True o False).
 
-**Salida:**
-```plaintext
-    producto_id               nombre  precio          categoría
-0            1              Portátil  999.99         Electrónica
-1            2  Teléfono Inteligente  599.99         Electrónica
-2            3              Cafetera   49.99  Electrodomésticos
-3            4           Auriculares  199.99         Electrónica
-4            5              Licuadora   79.99  Electrodomésticos
-```
+10. **`date_unit`**:
+    - **Descripción**: La unidad de tiempo de las fechas en los datos JSON.
+    - **Valores posibles**: Cadena de texto (str) como 's' (segundos), 'ms' (milisegundos), 'us' (microsegundos), 'ns' (nanosegundos).
 
-  ```python
-  # Usando 'index'
-  df_index = pd.read_json('productos.json', orient='index')
-  print(df_index)
-  ```
+11. **`encoding`**:
+    - **Descripción**: La codificación del archivo JSON.
+    - **Valores posibles**: Cadena de texto (str) que representa la codificación, por ejemplo, 'utf-8'.
 
-**Salida:**
-```plaintext
-             producto_id               nombre  precio          categoría
-0                       1              Portátil  999.99         Electrónica
-1                       2  Teléfono Inteligente  599.99         Electrónica
-2                       3              Cafetera   49.99  Electrodomésticos
-3                       4           Auriculares  199.99         Electrónica
-4                       5              Licuadora   79.99  Electrodomésticos
-```
+12. **`lines`**:
+    - **Descripción**: Si el archivo JSON está en un formato de una línea por registro.
+    - **Valores posibles**: Booleano (True o False).
 
-  ```python
-  # Usando 'columns'
-  df_columns = pd.read_json('productos.json', orient='columns')
-  print(df_columns)
-  ```
+13. **`chunksize`**:
+    - **Descripción**: El número de líneas por cada fragmento de datos que se leerán por vez.
+    - **Valores posibles**: Entero (int) o None.
 
-**Salida:**
-```plaintext
-    producto_id               nombre  precio          categoría
-0            1              Portátil  999.99         Electrónica
-1            2  Teléfono Inteligente  599.99         Electrónica
-2            3              Cafetera   49.99  Electrodomésticos
-3            4           Auriculares  199.99         Electrónica
-4            5              Licuadora   79.99  Electrodomésticos
-```
-
-  ```python
-  # Usando 'values'
-  df_values = pd.read_json('productos.json', orient='values')
-  print(df_values)
-  ```
-
-**Salida:**
-```plaintext
-    producto_id               nombre  precio          categoría
-0            1              Portátil  999.99         Electrónica
-1            2  Teléfono Inteligente  599.99         Electrónica
-2            3              Cafetera   49.99  Electrodomésticos
-3            4           Auriculares  199.99         Electrónica
-4            5              Licuadora   79.99  Electrodomésticos
-```
-
-#### `typ`
-- **Descripción**: Indica si se debe leer como un DataFrame o como una Serie. Los valores posibles son 'frame' o 'series'.
-- **Ejemplo**: 
-  ```python
-  # Leer como Serie
-  serie = pd.read_json('productos.json', typ='series')
-  print(serie)
-  ```
-
-**Salida:**
-```plaintext
-    producto_id               nombre  precio          categoría
-0            1              Portátil  999.99         Electrónica
-1            2  Teléfono Inteligente  599.99         Electrónica
-2            3              Cafetera   49.99  Electrodomésticos
-3            4           Auriculares  199.99         Electrónica
-4            5              Licuadora   79.99  Electrodomésticos
-```
-
-#### `dtype`
-- **Descripción**: Si se debe inferir el tipo de datos. Por defecto es True.
-- **Ejemplo**: 
-  ```python
-  df = pd.read_json('productos.json', dtype=False)
-  print(df.dtypes)
-  ```
-
-**Salida:**
-```plaintext
-producto_id    int64
-nombre         object
-precio         float64
-categoría      object
-dtype: object
-```
-
-#### `convert_dates`
-- **Descripción**: Si se debe intentar convertir las fechas. Por defecto es True.
-- **Ejemplo**: 
-  ```python
-  df = pd.read_json('productos_con_fechas.json', convert_dates=True)
-  print(df)
-  ```
-
-**Salida:**
-```plaintext
-    producto_id               nombre  precio          categoría      fecha
-0            1              Portátil  999.99         Electrónica 2021-01-01
-1            2  Teléfono Inteligente  599.99         Electrónica 2021-02-15
-2            3              Cafetera   49.99  Electrodomésticos 2021-03-20
-3            4           Auriculares  199.99         Electrónica 2021-04-25
-4            5              Licuadora   79.99  Electrodomésticos 2021-05-30
-```
-
-#### `lines`
-- **Descripción**: Si se debe leer el archivo línea por línea (útil para JSON lines).
-- **Ejemplo**: 
-  ```python
-  df = pd.read_json('productos.json', lines=True)
-  print(df)
-  ```
-
-**Salida:**
-```plaintext
-    producto_id               nombre  precio          categoría
-0            1              Portátil  999.99         Electrónica
-1            2  Teléfono Inteligente  599.99         Electrónica
-2            3              Cafetera   49.99  Electrodomésticos
-3            4           Auriculares  199.99         Electrónica
-4            5              Licuadora   79.99  Electrodomésticos
-```
+14. **`compression`**:
+    - **Descripción**: El tipo de compresión a utilizar si el archivo es comprimido.
+    - **Valores posibles**: 'infer', 'gzip', 'bz2', 'zip', 'xz', None.
+      - `'infer'`: Detecta automáticamente la compresión basada en la extensión del archivo.
